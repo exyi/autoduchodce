@@ -44,7 +44,7 @@ let getItemsFromSource (def: KupiItemSource) =
         |> Seq.map (fun offer ->
             let price = (offer.QuerySelector ".discounts_price div.left strong").TextContent |> parsePrice
             let size = (offer.QuerySelector ".discounts_price .discount_amount.left").TextContent.Trim().TrimStart('/').Trim()
-            let unitPrice = (offer.QuerySelector ".discounts_price .discount_price_value").TextContent |> parsePrice
+            let unitPrice = (offer.QuerySelector ".discounts_price span[style='font-size: 12px;']").TextContent.Split('/').[0] |> parsePrice
             let offeredBy = offer.QuerySelector(".discounts_shop_name").TextContent.Trim()
             let productID = offer.GetAttribute "data-product"
             let valid = (offer.QuerySelector ".discounts_validity").TextContent |> parseValidityRange
